@@ -33,13 +33,19 @@ def home():
 @app.get("/get_friend/{id}/")
 def get_friend(id:int, db:Session = Depends(get_db)):
     friend = Friend.get_friend(db=db, id=id)
-    return friend
+    if friend:
+        return friend, 200
+    return {"message": "Usuário não encontrado"}, 404
+
 
 # Endpoint de listagem de todos os usuários
 @app.get("/list_friends")
 def list_friends(db:Session = Depends(get_db)):
     friends_list = Friend.list_friends(db=db)
-    return friends_list
+    if friends_list:
+        return friends_list, 200
+    return {"message": "Nenhum usuário encontrado"}, 404
+
 
 # Endpoint de criação de um novo usuário
 @app.post("/create_friend")
@@ -50,7 +56,10 @@ def create_friend(first_name:str,last_name:str,age:int,db:Session = Depends(get_
         last_name=last_name,
         age=age
     )
-    return {"friend": friend}
+    if friend:
+        return friend, 201
+    return {"message": "Erro ao criar usuário"}, 500
+
 
 # Endpoint de atualização de um usuário por Id
 @app.put("/update_friend/{id}/") #id is a path parameter
@@ -64,17 +73,15 @@ def update_friend(id:int, first_name:str, last_name:str, age:int, db:Session=Dep
             last_name=last_name, 
             age=age
         )
-        return updated_friend
-    else:
-        return {"error": f"Friend with id {id} does not exist"}
+        return updated_friend, 200
+    return {"message": "Usuário não encontrado"}, 404
+
 
 # Endpoint de exclusão de um usuário por Id
 @app.delete("/delete_friend/{id}/")
 def delete_friend(id:int, db:Session=Depends(get_db)):
     db_friend = Friend.get_friend(db=db, id=id)
     if db_friend:
-        return Friend.delete_friend(db=db, id=id)
-    else:
-        return {"error": f"Friend with id {id} does not exist"}
-
+        return {"message": "Usuário excluído com sucesso"}, 200
+    return {"message": "Usuário não encontrado"}, 404
 

@@ -1,3 +1,6 @@
+![573098](https://user-images.githubusercontent.com/40063504/170791664-d8bdbdcf-81f2-49de-952e-442b2f2bcd6c.png)
+
+
 # REST-FastAPI_Friend
 Aplicação REST API de gerenciamento de informações em Python utilizando Framework FastAPI e padrão MVC.
 

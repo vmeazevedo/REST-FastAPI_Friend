@@ -7,13 +7,13 @@ from app.src.service.models import *
 from app.src.service.models import Session
 
 
-#initailize FastApi instance
+# Instancia do FastAPI
 app = FastAPI()
 
-#create the database tables on app startup or reload
+# Criando as tabelas do DB quando iniciar ou reiniciar
 models.Base.metadata.create_all(bind=engine)
 
-# getting the db
+# Dependência do SessionLocal
 def get_db():
     db = SessionLocal()
     try:
@@ -24,24 +24,24 @@ def get_db():
         db.close()
         
 
-# HOME
+# Endpoint inicial
 @app.get("/")
 def home():
     return {"message": "Hello World"}
 
-#get a Friend object
+# Endpoint de listagem de usuário por Id
 @app.get("/get_friend/{id}/")
 def get_friend(id:int, db:Session = Depends(get_db)):
     friend = Friend.get_friend(db=db, id=id)
     return friend
 
-#list Friend objects
+# Endpoint de listagem de todos os usuários
 @app.get("/list_friends")
 def list_friends(db:Session = Depends(get_db)):
     friends_list = Friend.list_friends(db=db)
     return friends_list
 
-#create a friend
+# Endpoint de criação de um novo usuário
 @app.post("/create_friend")
 def create_friend(first_name:str,last_name:str,age:int,db:Session = Depends(get_db)):
     friend = Friend.create_friend(
@@ -52,7 +52,7 @@ def create_friend(first_name:str,last_name:str,age:int,db:Session = Depends(get_
     )
     return {"friend": friend}
 
-# update a Friend object
+# Endpoint de atualização de um usuário por Id
 @app.put("/update_friend/{id}/") #id is a path parameter
 def update_friend(id:int, first_name:str, last_name:str, age:int, db:Session=Depends(get_db)):
     db_friend = Friend.get_friend(db=db, id=id)
@@ -68,7 +68,7 @@ def update_friend(id:int, first_name:str, last_name:str, age:int, db:Session=Dep
     else:
         return {"error": f"Friend with id {id} does not exist"}
 
-#delete friend object
+# Endpoint de exclusão de um usuário por Id
 @app.delete("/delete_friend/{id}/")
 def delete_friend(id:int, db:Session=Depends(get_db)):
     db_friend = Friend.get_friend(db=db, id=id)

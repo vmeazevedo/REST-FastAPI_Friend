@@ -1,4 +1,4 @@
-![573098](https://user-images.githubusercontent.com/40063504/170791664-d8bdbdcf-81f2-49de-952e-442b2f2bcd6c.png)
+![573098]<img src="https://user-images.githubusercontent.com/40063504/170791664-d8bdbdcf-81f2-49de-952e-442b2f2bcd6c.png" width="300" height="300>
 
 
 # REST-FastAPI_Friend

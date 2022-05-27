@@ -1,0 +1,4 @@
+SQLAlchemy
+"fastapi[all]"
+fastapi
+"uvicorn[standard]"

@@ -1,17 +1,17 @@
 from fastapi import FastAPI
 from fastapi import Depends
-from app.src.service import models
-from app.src.connection.db import engine
-from app.src.connection.db import SessionLocal
-from app.src.service.models import *
-from app.src.service.models import Session
+from app.src.service import friend_service
+from app.src.connection.db_connection import engine
+from app.src.connection.db_connection import SessionLocal
+from app.src.service.friend_service import *
+from app.src.service.friend_service import Session
 
 
 # Instancia do FastAPI
 app = FastAPI()
 
 # Criando as tabelas do DB quando iniciar ou reiniciar
-models.Base.metadata.create_all(bind=engine)
+friend_service.Base.metadata.create_all(bind=engine)
 
 # Dependência do SessionLocal
 def get_db():
